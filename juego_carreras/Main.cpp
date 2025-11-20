@@ -38,5 +38,13 @@ int main() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1500)); //Pausa el programa durante 1500 ms.
 	}
 
+	if (casillaJugador1 >= casillaFinal) {
+		std::cout << "El jugador 1 ha ganado." << std::endl;
+	}
+
+	else {
+		std::cout << "El jugador 2 ha ganado." << std::endl;
+	}
+
 	return 0;
 }

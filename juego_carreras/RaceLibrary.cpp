@@ -22,35 +22,40 @@ short dado(short valorMaximo, short valorMinimo) { //Función de lanzamiento de d
 	return (rand() % valorMaximo) + valorMinimo;
 }
 
-short usarObjeto(std::string item, short& posicionActual, short& posicionEnemigo) { //Función de uso de objeto.
+void usarObjeto(std::string& inventarioActual, short& posicionActual, short& posicionEnemigo) { //Función de uso de objeto.
 	short numeroAleatorio;
 
-	if (item == "Dado adicional.") {
+	if (inventarioActual == "Dado adicional.") {
 		std::cout << "Usando el -dado adicional-." << std::endl;
 
 		numeroAleatorio = dado(maximoValorGenerado, minimoValorGenerado); //Genera un número entre el 1 y el 6
+		std::cout << "Has avanzado " << numeroAleatorio << " casillas." << std::endl;
 
-		return posicionActual += numeroAleatorio;
+		inventarioActual = "Inventario vacío."; //Después de usar el objeto el inventario vacía.
+
+		posicionActual += numeroAleatorio;
 	}
 
-	else if (item == "Haces retroceder al enemigo.") {
+	else if (inventarioActual == "Haces retroceder al enemigo.") {
 		std::cout << "Usando el -Haces retroceder al enemigo-." << std::endl;
 
 		numeroAleatorio = dado(maximoValorGenerado, minimoValorGenerado);
-
 		std::cout << "El enemigo retrocede " << numeroAleatorio << " casillas." << std::endl;
 
-		return posicionEnemigo -= numeroAleatorio;
+		inventarioActual = "Inventario vacío."; //Después de usar el objeto el inventario vacía.
+
+		posicionEnemigo -= numeroAleatorio;
 	}
 
 	else {
 		std::cout << "Usando el -Avanzas 1-3 casillas-." << std::endl;
 
 		numeroAleatorio = dado(maximoValorGeneradoObjetos, minimoValorGenerado); //Genera un número entre el 1 y el 3.
-
 		std::cout << "Avanzas " << numeroAleatorio << " casillas." << std::endl;
 
-		return posicionActual += numeroAleatorio;
+		inventarioActual = "Inventario vacío."; //Después de usar el objeto el inventario vacía.
+
+		posicionActual += numeroAleatorio;
 	}
 }
 
@@ -63,7 +68,7 @@ std::string guardarObjeto(short item, std::string& inventario) {
 	return inventario;
 }
 
-short objeto(short jugadorActual, short& posicionActual, short& posicionEnemigo) {
+void objeto(short jugadorActual, short& posicionActual, short& posicionEnemigo) {
 	//Genera un valor entre el 1 y el 3. Lo genero al inicio, aunque el jugador no quiere coger el objeto. Así evito posteriormente en el código repetir esta linea.
 	short objeto = dado(maximoValorGeneradoObjetos, minimoValorGenerado); //Número entre 1 y 3.
 	char input;
@@ -94,12 +99,11 @@ short objeto(short jugadorActual, short& posicionActual, short& posicionEnemigo)
 
 		std::cout << "¿Quieres usar el objeto?" << std::endl;
 		input = controladorInput();
+
 		if (input == 'S') { //Si SI.
 			usarObjeto(inventarioActual, posicionActual, posicionEnemigo);
 		}
 	}
-
-	return 0;
 }
 
 short lanzamientoDado(short& posicionActual, short& posicionEnemigo, short turno) {
@@ -128,7 +132,7 @@ short lanzamientoDado(short& posicionActual, short& posicionEnemigo, short turno
 			break;
 
 		case 19:
-			posicionActual = 19;
+			posicionActual = 24;
 			std::cout << "Retrocedes a " << posicionActual << std::endl;
 			break;
 
