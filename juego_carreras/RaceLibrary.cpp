@@ -22,7 +22,7 @@ short dado(short valorMaximo, short valorMinimo) { //Función de lanzamiento de d
 	return (rand() % valorMaximo) + valorMinimo;
 }
 
-void usarObjeto(std::string& inventarioActual, short& posicionActual, short& posicionEnemigo) { //Función de uso de objeto.
+void usarObjeto(std::string& inventarioActual, short& posicionActual, short& posicionEnemigo, short& jugadorActual) { //Función de uso de objeto.
 	short numeroAleatorio;
 
 	if (inventarioActual == "Dado adicional.") {
@@ -33,7 +33,7 @@ void usarObjeto(std::string& inventarioActual, short& posicionActual, short& pos
 
 		inventarioActual = "Inventario vacío."; //Después de usar el objeto el inventario vacía.
 
-		posicionActual += numeroAleatorio;
+		posicionActual += numeroAleatorio; //Asigno la nueva posición.
 	}
 
 	else if (inventarioActual == "Haces retroceder al enemigo.") {
@@ -44,7 +44,7 @@ void usarObjeto(std::string& inventarioActual, short& posicionActual, short& pos
 
 		inventarioActual = "Inventario vacío."; //Después de usar el objeto el inventario vacía.
 
-		posicionEnemigo -= numeroAleatorio;
+		posicionEnemigo -= numeroAleatorio; //Asigno la nueva posición al enemigo.
 	}
 
 	else {
@@ -55,7 +55,7 @@ void usarObjeto(std::string& inventarioActual, short& posicionActual, short& pos
 
 		inventarioActual = "Inventario vacío."; //Después de usar el objeto el inventario vacía.
 
-		posicionActual += numeroAleatorio;
+		posicionActual += numeroAleatorio; //Asigno la nueva posición.
 	}
 }
 
@@ -83,7 +83,7 @@ void objeto(short jugadorActual, short& posicionActual, short& posicionEnemigo) 
 		input = controladorInput();
 
 		if (input == 'S') { //Si SI.
-			usarObjeto(inventarioActual, posicionActual, posicionEnemigo);
+			usarObjeto(inventarioActual, posicionActual, posicionEnemigo, jugadorActual);
 		}
 	}
 
@@ -92,7 +92,7 @@ void objeto(short jugadorActual, short& posicionActual, short& posicionEnemigo) 
 		input = controladorInput();
 
 		if (input == 'S') { //Si SI.
-			usarObjeto(inventarioActual, posicionActual, posicionEnemigo);
+			usarObjeto(inventarioActual, posicionActual, posicionEnemigo, jugadorActual);
 		}
 
 		inventarioActual = guardarObjeto(objeto, inventarioActual);
@@ -101,7 +101,7 @@ void objeto(short jugadorActual, short& posicionActual, short& posicionEnemigo) 
 		input = controladorInput();
 
 		if (input == 'S') { //Si SI.
-			usarObjeto(inventarioActual, posicionActual, posicionEnemigo);
+			usarObjeto(inventarioActual, posicionActual, posicionEnemigo, jugadorActual);
 		}
 	}
 }
@@ -121,44 +121,49 @@ short lanzamientoDado(short& posicionActual, short& posicionEnemigo, short turno
 	}
 
 	switch (posicionActual) {
-		case 7:
-			posicionActual = 12;
-			std::cout << "Retrocedes a " << posicionActual << std::endl;
-			break;
+	case 7:
+		posicionActual = 12;
+		std::cout << "Avanzas a " << posicionActual << std::endl;
+		break;
 
-		case 12:
-			posicionActual = 7;
-			std::cout << "Retrocedes a " << posicionActual << std::endl;
-			break;
+	case 12:
+		posicionActual = 7;
+		std::cout << "Retrocedes a " << posicionActual << std::endl;
+		break;
 
-		case 19:
-			posicionActual = 24;
-			std::cout << "Retrocedes a " << posicionActual << std::endl;
-			break;
+	case 19:
+		posicionActual = 24;
+		std::cout << "Avanzas a " << posicionActual << std::endl;
+		break;
 
-		case 24:
-			posicionActual = 19;
-			std::cout << "Retrocedes a " << posicionActual << std::endl;
-			break;
+	case 24:
+		posicionActual = 19;
+		std::cout << "Retrocedes a " << posicionActual << std::endl;
+		break;
 
-		case 31:
-			posicionActual = 40;
-			std::cout << "Retrocedes a " << posicionActual << std::endl;
-			break;
+	case 31:
+		posicionActual = 40;
+		std::cout << "Avanzas a " << posicionActual << std::endl;
+		break;
 
-		case 40:
-			posicionActual = 31;
-			std::cout << "Retrocedes a " << posicionActual << std::endl;
-			break;
+	case 40:
+		posicionActual = 31;
+		std::cout << "Retrocedes a " << posicionActual << std::endl;
+		break;
 
-		case 3:
-		case 13:
-		case 23:
-		case 33:
-		case 43:
-			objeto(turno, posicionActual, posicionEnemigo);
-			break;
+	case 3:
+	case 13:
+	case 23:
+	case 33:
+	case 43: //Para todos estos caso, ejecuto objeto();
+		objeto(turno, posicionActual, posicionEnemigo);
+		break;
 	}
 
 	return posicionActual;
+}
+
+void reiniciarInventarios() {
+	objetoJugador1 = "Inventario vacío.";
+	objetoJugador2 = "Inventario vacío.";
 }
